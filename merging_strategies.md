@@ -26,7 +26,7 @@
 
 ### Fast-Forward 
 
-Fast-forward merging is a straightforward process occuring when there are no new commits on the target branch since the divergence point. Git simply moves the branch 
+Fast-forward merging is a straightforward process occurring when there are no new commits on the target branch since the divergence point. Git simply moves the branch 
 pointer of the target branch forward to the tip of the source branch, effectively incorporating the changes. This results in a linear commit history and 
 is often used for simple feature branches or bug fixes.
 
@@ -34,19 +34,18 @@ is often used for simple feature branches or bug fixes.
 git merge source_branch
 ```
 
-On the figure `[Figure 1](#before-ff-merge)` is the git graph before calling the merge. Please note that the changes are only on the dev branch. `[Figure 2](#after-ff-merge)` then shows the 
-situation after the fast-forward merge occured, a linear commit history with moved branch pointer. 
+On the [Figure 1](#before-ff-merge) is the git graph before calling the merge. Please note that the changes are only on the dev branch. [Figure 2](#after-ff-merge) then shows the situation after the fast-forward merge occurred, a linear commit history with a moved branch pointer. 
 
-```bash
-<figure id="before-ff-merge" align="center">
-  <img src="images/before_ff_merge.png" alt="Before Fast-Forward Merge" width="400"/>
-  <figcaption>Figure 1: Before Fast-Forward Merge</figcaption>
-</figure>
-<figure id="after-ff-merge" align="center">
-  <img src="images/after_ff_merge.png" alt="After Fast-Forward Merge" width="400"/>
-  <figcaption>Figure 2: After Fast-Forward Merge</figcaption>
-</figure>
-```
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+  <figure id="before-ff-merge" style="text-align: center;">
+    <img src="images/before_ff_merge.png" alt="Before Fast-Forward Merge" width="250"/>
+    <figcaption>Figure 1: Before Fast-Forward</figcaption>
+  </figure>
+  <figure id="after-ff-merge" style="text-align: center;">
+    <img src="images/after_ff_merge.png" alt="After Fast-Forward Merge" width="250"/>
+    <figcaption>Figure 2: After Fast-Forward</figcaption>
+  </figure>
+</div>
 
 
 ### Three-Way
