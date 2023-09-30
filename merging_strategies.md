@@ -37,13 +37,13 @@ git merge source_branch
 On the figure `[Figure 1](#before-ff-merge)` is the git graph before calling the merge. Please note that the changes are only on the dev branch. `[Figure 2](#after-ff-merge)` then shows the 
 situation after the fast-forward merge occured, a linear commit history with moved branch pointer. 
 
-```
+```bash
 <figure id="before-ff-merge" align="center">
-  <img src="figure_before_ff_merge.png" alt="Before Fast-Forward Merge" width="400"/>
+  <img src="images/before_ff_merge.png" alt="Before Fast-Forward Merge" width="400"/>
   <figcaption>Figure 1: Before Fast-Forward Merge</figcaption>
 </figure>
 <figure id="after-ff-merge" align="center">
-  <img src="figure_after_ff_merge.png" alt="After Fast-Forward Merge" width="400"/>
+  <img src="images/after_ff_merge.png" alt="After Fast-Forward Merge" width="400"/>
   <figcaption>Figure 2: After Fast-Forward Merge</figcaption>
 </figure>
 ```
