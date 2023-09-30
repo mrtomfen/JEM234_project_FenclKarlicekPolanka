@@ -77,14 +77,7 @@ Below you can find [Figure 3](#before-tw-merge) and [Figure 4](#after-tw-merge) 
 </div>
 
 
-
-
-
-
-
 ## Advanced techniques
-
-
 
 
 
