@@ -1,51 +1,45 @@
-# TODO:
-* Introduction
-  * what merge is and its purpose
-* Basic merging algorithms
-  * fast-forward
-  * three-way
-* Advanced
-  * resolve
-  * recursive
-  * ort
-  * octopus
-  * ours
-  * subtree
+# Merging strategies
+  * When people collaborate on one project in Git, they often use different branches. This approach is convenient because it allows for isolation of changes and organised parallel development process. Each branch works on its own part of the project and together they form the whole outcome. But to be able to come up with only one final version of the project, they need to merge their parts of code (branches) together, and there are many ways to achieve this goal.
 
-# Advanced merging strategies
-
-<two-three sentences about merging>
-
+  * This GitHub repository describes both fundamental and advanced merging methods in git.
+  
 ## Contents
-
+* Fundamental merging algorithms
+  * Fast-forward
+  * Three-way
+* Advanced merging algorithms
+  * Resolve
+  * Recursive
+  * Ort
+  * Octopus
+  * Ours
+  * Subtree
 <contents>
 
-## Fundamental techniques
-
-<two-three sentence intro to fund m.t.>
+## Fundamental merging algorithms
+In Git, there are two basic merging algorithms: fast-forward merging and three-way merging. These algorithms are used to combine changes from one branch into another branch. The choice of merging algorithm depends on the branch histories and whether there are any conflicts between the branches being merged.
 
 ### Fast-Forward 
 
-Fast-forward merging is a straightforward process occurring when there are no new commits on the target branch since the divergence point. Git simply moves the branch 
-pointer of the target branch forward to the tip of the source branch, effectively incorporating the changes. This results in a linear commit history and 
-is often used for simple feature branches or bug fixes.
+Fast-forward merging is a straightforward process occurring when there are no new commits on the target branch since the divergence point. Git simply moves the branch pointer of the target branch forward to the tip of the source branch, effectively incorporating the changes. This results in a linear commit history and is often used for simple feature branches or bug fixes.
 
 ```bash
 git merge source_branch
 ```
 
-On the [Figure 1](#before-ff-merge) is the git graph before calling the merge. Please note that the changes are only on the dev branch. [Figure 2](#after-ff-merge) then shows the situation after the fast-forward merge occurred, a linear commit history with a moved branch pointer. 
+On the [Figure 1](#ff-merge) is the git graph before and after calling the merge. You can see the main branch in blue and dev branch in green. Please note that the changes are only on the dev branch. After the fast-forward merge occurred, a linear commit history with a moved branch pointer has been created. Thus, the changes in the dev branch were incorporated into the main branch. 
 
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-  <figure id="before-ff-merge" style="text-align: center;">
-    <img src="images/before_ff_merge.png" alt="Before Fast-Forward Merge" width="250"/>
-    <figcaption>Figure 1: Before Fast-Forward</figcaption>
-  </figure>
-  <figure id="after-ff-merge" style="text-align: center;">
-    <img src="images/after_ff_merge.png" alt="After Fast-Forward Merge" width="250"/>
-    <figcaption>Figure 2: After Fast-Forward</figcaption>
-  </figure>
-</div>
+<figure id="ff-merge" style="text-align: center;">
+  <img src="images/ff_merge.png" alt="Fast-Forward Merge" width="250"/>
+  <figcaption>Figure 1: Fast-Forward merging</figcaption>
+</figure>
+<p style="text-align: center;">
+  Image source: www.bogotobogo.com 
+</p>
+<https://www.bogotobogo.com/DevOps/SCM/Git/Git_GitHub_Fast-Forward_Merge.php>
+
+
+<!--TBD nechapu co se timhle odstavcem snazime rict, bud bych to preformuloval nebo vynechal-Martin--> 
 
 Additionally, merge commit can be forced even if a fast-forward merge is possible by the call below. However, this doesn't change the fundamental decision-making process of Git.
 
@@ -63,22 +57,28 @@ new merge commit that reconciles these changes.
 git merge -s recursive source_branch target_branch
 ```
 
-Below you can find [Figure 3](#before-tw-merge) and [Figure 4](#after-tw-merge) to see the before and after git graphs of three-way merge.
+Below you can find [Figure 3](#tw-merge) to see the before and after git graphs of three-way merge.
   
-<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-  <figure id="before-tw-merge" style="text-align: center;">
-    <img src="images/before_tw_merge.png" alt="Before Three-Way Merge" width="250"/>
-    <figcaption>Figure 3: Before Three-Way</figcaption>
-  </figure>
-  <figure id="after-tw-merge" style="text-align: center;">
-    <img src="images/after_tw_merge.png" alt="After Three-Way Merge" width="250"/>
-    <figcaption>Figure 4: After Three-Way</figcaption>
-  </figure>
-</div>
+<figure id="tw-merge" style="text-align: center;">
+  <img src="images/three-way-merge.png" alt="Three-way Merge" width="500"/>
+  <figcaption>Figure 2: Three-way merging</figcaption>
+</figure>
+<p style="text-align: center;">
+  Image source: www.dev.to
+</p>
+<https://dev.to/neshaz/how-to-use-git-merge-the-correctway-25pd>
 
 
-## Advanced techniques
+## Advanced merging strategies
+It might happen that the branch structure is more complex than in the previously mentioned fundamental merging strategies. For such situations Git provides a range of sophisticated merging algorithms that go beyond the basic fast-forward and three-way merges. These advanced merging strategies are designed to handle complex development workflows. As software projects grow in size and complexity, mastering these advanced merging techniques becomes increasingly essential for developers and teams striving for efficient code management, collaboration, and version control.
 
+### Resolve
+
+### Recursive
+### Ort
+### Octopus
+### Ours
+### Subtree
 
 
 ## Sources: 
