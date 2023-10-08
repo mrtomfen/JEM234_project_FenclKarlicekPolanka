@@ -1,31 +1,30 @@
 # Merging strategies
-  * When people collaborate on one project in Git, they often use different branches. This approach is convenient because it allows for isolation of changes and organised parallel development process. Each branch works on its own part of the project and together they form the whole outcome. But to be able to come up with only one final version of the project, they need to merge their parts of code (branches) together, and there are many ways to achieve this goal.
-
-  * This GitHub repository describes both fundamental and advanced merging methods in git.
+One of the main advantages of Git is that it enables cooperators to work on different branches, which is convenient for an isolation of changes and organised parallel development process. Each branch is dedicated to a specific component of the project, collectively contributing to the comprehensive end result. However, in order to result in a final version of the project, the various branches of code must be merged together, and there are multiple ways to achieve that, depending on the given situation. This GitHub repository briefly describes the fundamental merging methods in Git and then elaborates on their advanced alternatives.
   
 ## Contents
-* Fundamental merging algorithms
-  * Fast-forward
-  * Three-way
-* Advanced merging algorithms
-  * Resolve
-  * Recursive
-  * Ort
-  * Octopus
-  * Ours
-  * Subtree
-<contents>
+- [Fundamental merging algorithms](#fundamental-merging-algorithms)
+    - [Fast-Forward](#fast-forward)
+    - [Three-way](#three-way)
+- [Advanced merging algorithms](#advanced-merging-algorithms)
+    - [No Fast-forward](#no-fast-forward)
+    - [Ort](#ort)
+    - [Recursive](#recursive)
+    - [Resolve](#resolve)
+    - [Octopus](#octopus)
+    - [Ours](#ours)
+    - [Subtree](#subtree)
+- [Sources](#sources)
 
 ## Fundamental merging algorithms
-In Git, there are two basic merging algorithms: fast-forward merging and three-way merging. These algorithms are used to combine changes from one branch into another branch. The choice of merging algorithm depends on the branch histories and whether there are any conflicts between the branches being merged.
+In Git, there are two basic merging algorithms, fast-forward merging and three-way merging. These algorithms are used to combine changes from one branch into another branch. The choice of merging algorithm depends on the branch histories and whether there are any conflicts between the branches being merged.
 
 ### Fast-Forward 
-
-Fast-forward merging is a straightforward process occurring when there are no new commits on the target branch since the divergence point. Git simply moves the branch pointer of the target branch forward to the tip of the source branch, effectively incorporating the changes. This results in a linear commit history and is often used for simple feature branches or bug fixes.
 
 ```bash
 git merge source_branch
 ```
+
+Fast-forward merging is a straightforward process occurring when there are no new commits on the target branch since the divergence point. Git simply moves the branch pointer of the target branch forward to the tip of the source branch, effectively incorporating the changes. This results in a linear commit history and is often used for simple feature branches or bug fixes.
 
 On the [Figure 1](#ff-merge) is the git graph before and after calling the merge. You can see the main branch in blue and dev branch in green. Please note that the changes are only on the dev branch. After the fast-forward merge occurred, a linear commit history with a moved branch pointer has been created. Thus, the changes in the dev branch were incorporated into the main branch. 
 
@@ -38,26 +37,15 @@ On the [Figure 1](#ff-merge) is the git graph before and after calling the merge
 </p>
 <https://www.bogotobogo.com/DevOps/SCM/Git/Git_GitHub_Fast-Forward_Merge.php>
 
-
-<!--TBD nechapu co se timhle odstavcem snazime rict, bud bych to preformuloval nebo vynechal-Martin--> 
-
-Additionally, merge commit can be forced even if a fast-forward merge is possible by the call below. However, this doesn't change the fundamental decision-making process of Git.
-
-```bash
-git merge --no-ff source_branch
-```
-
 ### Three-Way
 
-Unlike fast-forward merges, three-way merges are employed when both the source and target branches have received new commits since their divergence. This scenario requires Git to perform a more 
-complex merge, taking into account the common ancestor of the branches. Git then compares the changes introduced in each branch since that point. It then creates a
-new merge commit that reconciles these changes.
-
 ```bash
-git merge -s recursive source_branch target_branch
+git merge -s ort source_branch
 ```
 
-Below you can find [Figure 3](#tw-merge) to see the before and after git graphs of three-way merge.
+Unlike fast-forward merges, three-way merges are employed when both the source and target branches have received new commits since their divergence. This scenario requires Git to perform a more complex merge, taking into account the common ancestor of the branches. Git then compares the changes introduced in each branch since that point. It then creates a new merge commit that reconciles these changes. This method ensures a comprehensive merging process that takes into account the contributions from both branches.
+
+Below you can find [Figure 2](#tw-merge) to see the before and after Git graphs of the three-way merge.
   
 <figure id="tw-merge" style="text-align: center;">
   <img src="images/three-way-merge.png" alt="Three-way Merge" width="500"/>
@@ -69,16 +57,66 @@ Below you can find [Figure 3](#tw-merge) to see the before and after git graphs 
 <https://dev.to/neshaz/how-to-use-git-merge-the-correctway-25pd>
 
 
-## Advanced merging strategies
-It might happen that the branch structure is more complex than in the previously mentioned fundamental merging strategies. For such situations Git provides a range of sophisticated merging algorithms that go beyond the basic fast-forward and three-way merges. These advanced merging strategies are designed to handle complex development workflows. As software projects grow in size and complexity, mastering these advanced merging techniques becomes increasingly essential for developers and teams striving for efficient code management, collaboration, and version control.
+## Advanced merging algorithms
+It might happen that the branch structure is more complex than in the previously mentioned fundamental merging strategies. For such situations, git provides a range of sophisticated merging algorithms that go beyond the basic fast-forward and three-way merges. These advanced merging strategies are designed to handle complex development workflows. As software projects grow in size and complexity, mastering these advanced merging techniques becomes increasingly essential for developers and teams striving for efficient code management, collaboration, and version control.
+
+### No Fast-Forward
+
+```bash
+git merge --no-ff source_branch
+```
+
+Occasionally, you want to prevent Git from just moving your branch pointer to the incoming commit, typically because you want to maintain a specific branch topology (e.g. you're merging in a topic branch and you want to ensure it looks that way when reading history). In order to do that, you can pass the --no-ff flag and git merge will always construct a merge instead of fast-forwarding.
+
+### Ort
+
+```bash
+git merge -s ort source_branch
+```
+
+This is the default merge strategy when pulling or merging one branch and the name is an acronym of Ostensibly Recursive’s Twin as it replaces the previous default algorithm, recursive. Ort is able to resolve only two heads using the three-way merge algorithm, and it does so by detecting a common ancestor or creating a tree of these ancestors. This strategy results in fewer merge conflicts and can detect and handle merges involving renames. It does not make use of detected copies. 
+
+### Recursive
+
+```bash
+git merge -s recursive source_branch
+```
+
+Recursive was the default strategy for resolving two heads from Git v0.99.9k until v2.33.0. This strategy takes the same options as ort, nevertheless, there are three additional options ignored by ort, which might be useful with recursive.
 
 ### Resolve
 
-### Recursive
-### Ort
+```bash
+git merge -s resolve source_branch
+```
+
+Resolve is an advanced strategy which resolves two heads using the three-way merging algorithm. Careful detection of criss-cross merge ambiguities (i.e. complex branching and merging scenarios which make it difficult for the system to automatically determine the correct merge path) then leads to a stop of the merging process and manual conflict resolution. Resolve does not handle renames.
+
 ### Octopus
+
+```bash
+git merge -s octopus branch_1 branch_2 ... branch_n
+```
+
+The octopus merge strategy is designed to resolve cases with more than two heads and is the default strategy for pulling or merging more than one branch. It avoids complex manual resolution and, hence is intended for merging scenarios where Git can automatically determine the merge outcome without user intervention. Primarily meant for bundling topic branch heads together, such as merging multiple feature branches into a main development branch.
+
+
 ### Ours
+
+```bash
+git merge -s ours source_branch
+```
+
+This strategy resolves any number of heads, but it prioritizes the current branch's changes over others. It is primarily meant to be used to supersede the old development history of side branches. Please do not exchange for the ours option of the recursive merge strategy.
+
 ### Subtree
+
+```bash
+git merge -s subtree branch_A branch_B
+```
+
+Subtree is a specialized strategy used for incorporating changes from one repository into a subdirectory of another repository. Git ensures that the tree structure of B, where B represents a subtree of A, aligns with that of A. This means that if B corresponds to a subdirectory within A, Git will adjust the structure of B to match the subdirectory's location in A.
+
 
 
 ## Sources: 
