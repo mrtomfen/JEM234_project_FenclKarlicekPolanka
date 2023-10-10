@@ -1,7 +1,7 @@
 # Merging strategies
-One of the main advantages of Git is that it enables cooperators to work on different branches, which is convenient for an isolation of changes and organised parallel development process. Each branch is dedicated to a specific component of the project, collectively contributing to the comprehensive end result. However, in order to result in a final version of the project, the various branches of code must be merged together, and there are multiple ways to achieve that, depending on the given situation. This GitHub repository briefly describes the fundamental merging methods in Git and then elaborates on their advanced alternatives.
   
 ## Contents
+- [Introduction](#introduction)
 - [Fundamental merging algorithms](#fundamental-merging-algorithms)
     - [Fast-Forward](#fast-forward)
     - [Three-way](#three-way)
@@ -14,6 +14,10 @@ One of the main advantages of Git is that it enables cooperators to work on diff
     - [Ours](#ours)
     - [Subtree](#subtree)
 - [Sources](#sources)
+
+## Introduction
+One of the main advantages of Git is that it enables cooperators to work on different branches, which is convenient for an isolation of changes and organised parallel development process. Each branch is dedicated to a specific component of the project, collectively contributing to the comprehensive end result. However, in order to result in a final version of the project, the various branches of code must be merged together, and there are multiple ways to achieve that, depending on the given situation. This GitHub repository briefly describes the fundamental merging methods in Git and then elaborates on their advanced alternatives.
+
 
 ## Fundamental merging algorithms
 In Git, there are two basic merging algorithms, fast-forward merging and three-way merging. These algorithms are used to combine changes from one branch into another branch. The choice of merging algorithm depends on the branch histories and whether there are any conflicts between the branches being merged.
