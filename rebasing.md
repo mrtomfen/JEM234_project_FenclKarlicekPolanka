@@ -1,14 +1,16 @@
 # Rebasing
 ## Contents
-- [Introduction](#introduction)
-- [Warning](#warning)
-- [Examples](#examples)
-    - [Simple example](#simple-example)
-    - [Interactive](#interactive)
-    - [Multiple branches](#multiple-branches)
-- [Pros and Cons of Rebasing](#pros-and-cons-of-rebasing)
-- [Merge vs Rebase](#merge-vs-rebase)
-- [Sources](#sources)
+- [Rebasing](#rebasing)
+  - [Contents](#contents)
+  - [Introduction](#introduction)
+  - [Warning](#warning)
+  - [Examples](#examples)
+      - [Simple example](#simple-example)
+      - [Interactive](#interactive)
+      - [Multiple branches](#multiple-branches)
+  - [Pros and Cons of Rebasing](#pros-and-cons-of-rebasing)
+  - [Merge vs Rebase](#merge-vs-rebase)
+  - [Sources](#sources)
 
 
 ## Introduction
