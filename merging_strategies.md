@@ -1,19 +1,25 @@
 # Merging strategies
-One of the main advantages of Git is that it enables cooperators to work on different branches, which is convenient for an isolation of changes and organised parallel development process. Each branch is dedicated to a specific component of the project, collectively contributing to the comprehensive end result. However, in order to result in a final version of the project, the various branches of code must be merged together, and there are multiple ways to achieve that, depending on the given situation. This GitHub repository briefly describes the fundamental merging methods in Git and then elaborates on their advanced alternatives.
   
 ## Contents
-- [Fundamental merging algorithms](#fundamental-merging-algorithms)
-    - [Fast-Forward](#fast-forward)
-    - [Three-way](#three-way)
-- [Advanced merging algorithms](#advanced-merging-algorithms)
-    - [No Fast-forward](#no-fast-forward)
-    - [Ort](#ort)
-    - [Recursive](#recursive)
-    - [Resolve](#resolve)
-    - [Octopus](#octopus)
-    - [Ours](#ours)
-    - [Subtree](#subtree)
-- [Sources](#sources)
+- [Merging strategies](#merging-strategies)
+  - [Contents](#contents)
+  - [Introduction](#introduction)
+  - [Fundamental merging algorithms](#fundamental-merging-algorithms)
+      - [Fast-Forward](#fast-forward)
+      - [Three-way](#three-way)
+  - [Advanced merging algorithms](#advanced-merging-algorithms)
+      - [No Fast-forward](#no-fast-forward)
+      - [Ort](#ort)
+      - [Recursive](#recursive)
+      - [Resolve](#resolve)
+      - [Octopus](#octopus)
+      - [Ours](#ours)
+      - [Subtree](#subtree)
+  - [Sources](#sources)
+
+## Introduction
+One of the main advantages of Git is that it enables cooperators to work on different branches, which is convenient for an isolation of changes and organised parallel development process. Each branch is dedicated to a specific component of the project, collectively contributing to the comprehensive end result. However, in order to result in a final version of the project, the various branches of code must be merged together, and there are multiple ways to achieve that, depending on the given situation. This GitHub repository briefly describes the fundamental merging methods in Git and then elaborates on their advanced alternatives.
+
 
 ## Fundamental merging algorithms
 In Git, there are two basic merging algorithms, fast-forward merging and three-way merging. These algorithms are used to combine changes from one branch into another branch. The choice of merging algorithm depends on the branch histories and whether there are any conflicts between the branches being merged.
@@ -74,7 +80,10 @@ Occasionally, you want to prevent Git from just moving your branch pointer to th
 git merge -s ort source_branch
 ```
 
-This is the default merge strategy when pulling or merging one branch and the name is an acronym of Ostensibly Recursive’s Twin as it replaces the previous default algorithm, recursive. Ort is able to resolve only two heads using the three-way merge algorithm, and it does so by detecting a common ancestor or creating a tree of these ancestors. This strategy results in fewer merge conflicts and can detect and handle merges involving renames. It does not make use of detected copies. 
+This is the default merge strategy when pulling or merging one branch and the name is an acronym of Ostensibly Recursive’s Twin as it replaces the previous default algorithm, recursive. 
+Ort is able to resolve only two heads using the three-way merge algorithm, and it does so by detecting a common ancestor or creating a tree of these ancestors using 3-way-merge to create inner-merges which will provide the common ancestor. 
+This strategy results in fewer merge conflicts and can detect and handle merges involving renames. It does not make use of detected copies.
+It provides quite significant increase in speed for large repositories and solve corner cases which were hard for recursive.
 
 ### Recursive
 
@@ -82,7 +91,9 @@ This is the default merge strategy when pulling or merging one branch and the na
 git merge -s recursive source_branch
 ```
 
-Recursive was the default strategy for resolving two heads from Git v0.99.9k until v2.33.0. This strategy takes the same options as ort, nevertheless, there are three additional options ignored by ort, which might be useful with recursive.
+Recursive was the default strategy for resolving two heads from Git v0.99.9k until v2.33.0. 
+It is similar to ort as in case there is more ancestors it creates merged tree of the common ancestors for 3-way-merge.
+This strategy takes the same options as ort, nevertheless, there are three additional options ignored by ort, which might be useful with recursive.
 
 ### Resolve
 
@@ -91,6 +102,7 @@ git merge -s resolve source_branch
 ```
 
 Resolve is an advanced strategy which resolves two heads using the three-way merging algorithm. Careful detection of criss-cross merge ambiguities (i.e. complex branching and merging scenarios which make it difficult for the system to automatically determine the correct merge path) then leads to a stop of the merging process and manual conflict resolution. Resolve does not handle renames.
+In oppose to the recursive and ort strategies, in case of more ancestors, it picks one of them random for the 3-way-merge.
 
 ### Octopus
 
@@ -99,7 +111,7 @@ git merge -s octopus branch_1 branch_2 ... branch_n
 ```
 
 The octopus merge strategy is designed to resolve cases with more than two heads and is the default strategy for pulling or merging more than one branch. It avoids complex manual resolution and, hence is intended for merging scenarios where Git can automatically determine the merge outcome without user intervention. Primarily meant for bundling topic branch heads together, such as merging multiple feature branches into a main development branch.
-
+The main advantage is that when we need to merge multiple branches it creates only single merge commit.
 
 ### Ours
 
@@ -107,15 +119,18 @@ The octopus merge strategy is designed to resolve cases with more than two heads
 git merge -s ours source_branch
 ```
 
-This strategy resolves any number of heads, but it prioritizes the current branch's changes over others. It is primarily meant to be used to supersede the old development history of side branches. Please do not exchange for the ours option of the recursive merge strategy.
+This strategy resolves any number of heads, but it prioritizes the current branch's changes over others. It is primarily meant to be used to supersede the old development history of side branches. 
+It is useful when we want to keep the history of the branch without incorporating the changes. Please do not exchange for the ours option of the recursive merge strategy.
 
 ### Subtree
 
 ```bash
 git merge -s subtree branch_A branch_B
 ```
-
-Subtree is a specialized strategy used for incorporating changes from one repository into a subdirectory of another repository. Git ensures that the tree structure of B, where B represents a subtree of A, aligns with that of A. This means that if B corresponds to a subdirectory within A, Git will adjust the structure of B to match the subdirectory's location in A.
+It is extension of recursive strategy in case we have two projects, A and B where B is subdirectory of A.
+When merging B into A Git ensures that the tree structure of B aligns with that of A. 
+This means that if B corresponds to a subdirectory within A, 
+Git will adjust the structure of B to match the subdirectory's location in A.
 
 
 
